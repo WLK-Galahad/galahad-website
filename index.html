@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <title>Hej fra Galahad</title>
-  <style>
-    body {
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 20%;
-    }
-    h1, p {
-      color: blue;
-    }
-    #ip {
-      color: green;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hej</h1>
-  <p>Hilsen Galahad</p>
-  <p id="ip">Indlæser IP-adresse...</p>
+import tkinter as tk
+import itertools
 
-  <script>
-    fetch("https://api.ipify.org?format=json")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("ip").textContent = "Din IP-adresse er: " + data.ip;
-      })
-      .catch(() => {
-        document.getElementById("ip").textContent = "Kunne ikke hente IP-adressen.";
-      });
-  </script>
-</body>
-</html>
+# Farver til blink
+colors = ['red', 'yellow', 'green', 'blue', 'magenta', 'cyan']
+
+# Generator til at cykle igennem farverne
+color_cycle = itertools.cycle(colors)
+
+# Funktion til at opdatere farven
+def blink():
+    label.config(fg=next(color_cycle))
+    root.after(300, blink)  # Opdater farven hver 300 ms
+
+# Opsætning af vindue
+root = tk.Tk()
+root.title("Blinkende tekst")
+root.configure(bg='black')
+
+# Etiket med teksten
+label = tk.Label(root, text="Hej, du er FUCKING grim", font=("Helvetica", 32, "bold"), bg='black')
+label.pack(expand=True)
+
+# Start blink
+blink()
+
+# Kør vinduet
+root.mainloop()
